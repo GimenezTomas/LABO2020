@@ -10,6 +10,11 @@ public class Calculadora {
     private Programa programa;
     private ArrayList<Float> pila= new ArrayList<>();
     private ArrayList<Variables> variables= new ArrayList<Variables>();
+    /*
+    los atributos solo de inicializan en los constructores
+    Porqué la calculadora tiene un hashset de programas
+    y un programa aparte?
+     */
     //GETTERS && SETTERS
     public ArrayList<Float> getPila() {
         return pila;
