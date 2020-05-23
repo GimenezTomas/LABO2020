@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="43ceafa0-e161-449a-b1a5-e1ce7cd49309" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../../out/production/LABO2020/APPfutbol/AppEquipoFutsal.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../out/production/LABO2020/APPfutbol/Equipos.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../out/production/LABO2020/APPfutbol/Jugador.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../out/production/LABO2020/APPfutbol/Partido.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../out/production/LABO2020/AppDeposito/AppParaDeposito.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../out/production/LABO2020/AppDeposito/Registro.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../out/production/LABO2020/Calculadora/Calculadora.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../out/production/LABO2020/Calculadora/Calculadora.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../out/production/LABO2020/Calculadora/Instruccion.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../out/production/LABO2020/Calculadora/Instruccion.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../out/production/LABO2020/Calculadora/Programa.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../out/production/LABO2020/Calculadora/Programa.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../out/production/LABO2020/Calculadora/Rutina.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../out/production/LABO2020/Calculadora/Rutina.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../out/production/LABO2020/Calculadora/Variables.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../out/production/LABO2020/Hotel/Habitaciones.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../out/production/LABO2020/Hotel/Habitaciones.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../out/production/LABO2020/Hotel/Hotel.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../out/production/LABO2020/Hotel/Hotel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../out/production/LABO2020/Hotel/Huesped.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../out/production/LABO2020/Hotel/Huesped.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../out/production/LABO2020/Hotel/Reserva.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../out/production/LABO2020/Hotel/Reserva.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../out/production/LABO2020/META-INF/LABO2020.kotlin_module" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../out/production/LABO2020/Ordendecompra/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../out/production/LABO2020/Ordendecompra/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../out/production/LABO2020/Ordendecompra/OrdenDeCompra.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../out/production/LABO2020/Ordendecompra/OrdenDeCompra.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../out/production/LABO2020/Ordendecompra/ProductoAlimenticio.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../out/production/LABO2020/Ordendecompra/ProductoAlimenticio.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../APPfutbol/AppEquipoFutsal.java" beforeDir="false" afterPath="$PROJECT_DIR$/../equipo_futbol/AppEquipoFutsal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../APPfutbol/Equipos.java" beforeDir="false" afterPath="$PROJECT_DIR$/../equipo_futbol/Equipos.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../APPfutbol/Jugador.java" beforeDir="false" afterPath="$PROJECT_DIR$/../equipo_futbol/Jugador.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../APPfutbol/Partido.java" beforeDir="false" afterPath="$PROJECT_DIR$/../equipo_futbol/Partido.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AppDeposito/AppParaDeposito.java" beforeDir="false" afterPath="$PROJECT_DIR$/../deposito/AppParaDeposito.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AppDeposito/Registro.java" beforeDir="false" afterPath="$PROJECT_DIR$/../deposito/Registro.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Calculadora.java" beforeDir="false" afterPath="$PROJECT_DIR$/Calculadora.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Instruccion.java" beforeDir="false" afterPath="$PROJECT_DIR$/Instruccion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programa.java" beforeDir="false" afterPath="$PROJECT_DIR$/Programa.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rutina.java" beforeDir="false" afterPath="$PROJECT_DIR$/Rutina.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Variables.java" beforeDir="false" afterPath="$PROJECT_DIR$/Variable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Hotel/Habitaciones.java" beforeDir="false" afterPath="$PROJECT_DIR$/../hotel/Habitaciones.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Hotel/Hotel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../hotel/Hotel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Hotel/Huesped.java" beforeDir="false" afterPath="$PROJECT_DIR$/../hotel/Huesped.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Hotel/Reserva.java" beforeDir="false" afterPath="$PROJECT_DIR$/../hotel/Reserva.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Ordendecompra/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ordendecompra/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Ordendecompra/OrdenDeCompra.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ordendecompra/OrdenDeCompra.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Ordendecompra/ProductoAlimenticio.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ordendecompra/ProductoAlimenticio.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="ProjectId" id="1cKDpWEOWv80ZrYSsXWOdik714I" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="43ceafa0-e161-449a-b1a5-e1ce7cd49309" name="Default Changelist" comment="" />
+      <created>1590268574682</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1590268574682</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="460" y="119" key="FileChooserDialogImpl" timestamp="1590268662842">
+      <screen x="0" y="0" width="1360" height="728" />
+    </state>
+    <state x="460" y="119" key="FileChooserDialogImpl/0.0.1360.728@0.0.1360.728" timestamp="1590268662842" />
+  </component>
+</project>
