@@ -193,6 +193,7 @@ public class Calculadora {
         p.AgregarInstruccion("Rutina A", "push");
         p.AgregarInstruccion("Rutina A", "push");
         p.AgregarInstruccion("Rutina A", "add");
+        p.AgregarInstruccion("Rutina A", "mul");
         p.AgregarInstruccion("Rutina A", "push");
         p.AgregarInstruccion("Rutina A", "sub");
         p.AgregarInstruccion("Rutina A", "push");

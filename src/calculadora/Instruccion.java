@@ -54,3 +54,8 @@ public class Instruccion {
                 }
         }
 }
+/*Hacer que la clase Huesped sea subclase de la clase Persona.
+Crear las instancias de la super clase en los constructores de la clase Huesped.
+Crear las subclases: InstruccionConNumero InstruccionConVariable utilizando la clase Instruccion.
+Crear las instancias de la superclase en los constructores de las subclases del punto anterior.
+Utilizar 2 veces, en lugares a elección, la palabra reservada "*/
