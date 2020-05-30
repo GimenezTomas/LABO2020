@@ -193,7 +193,6 @@ public class Calculadora {
         p.AgregarInstruccion("Rutina A", "push");
         p.AgregarInstruccion("Rutina A", "push");
         p.AgregarInstruccion("Rutina A", "add");
-        p.AgregarInstruccion("Rutina A", "mul");
         p.AgregarInstruccion("Rutina A", "push");
         p.AgregarInstruccion("Rutina A", "sub");
         p.AgregarInstruccion("Rutina A", "push");
@@ -212,7 +211,3 @@ public class Calculadora {
         }
     }
 }
-/*DUDAS:
-    1) La pila la deben compartir todas las rutinas?
-
- */
