@@ -165,7 +165,6 @@ public class Hotel {
     }
     public void estadiaProlongada (ArrayList<Reserva> reservasNOCLON)
     {
-
         ArrayList<Reserva> reservas= new ArrayList<>();
         int contador=0;
         ArrayList<Integer> huespedesEstadiaProlongada= new ArrayList<Integer>();
@@ -353,18 +352,10 @@ public class Hotel {
     public void importeAPagarxHuespd(ArrayList<Reserva> reservas)
     {
         float ingresototal = 0;
-        /*Date dt= new Date();
-        String date1, date2;
-        DateTimeFormatter df = DateTimeFormatter.ofPattern("d-MMM-yyyy");*/
         Long datediff;
         for(Reserva x : reservas)
         {
             datediff=dateDiff(x.getFechaIngreso(),x.getFechaEgreso());
-            /*date1=formatearFecha(x.getFechaIngreso());
-            date2 = formatearFecha(x.getFechaEgreso());
-            LocalDate  d1 = LocalDate.parse(date1, df);
-            LocalDate  d2 = LocalDate.parse(date2, df);
-            Long datediff = ChronoUnit.DAYS.between(d1,d2);*/
             System.out.println("MONTO TOTAL: "+datediff*x.getHabitacion().getPrecio()+"HUESPED: "+ x.getNumeroHuesped());
         }
     }
