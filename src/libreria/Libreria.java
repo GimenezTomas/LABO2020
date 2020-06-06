@@ -60,7 +60,7 @@ public class Libreria {
                         {
                             if(nombreLibro.equals(libro.getNombre()))
                             {
-                                libroElegido=true;//poner al final
+                                libroElegido=true;
                                 System.out.println("NOMBRE EDITORIAL: ");
                                 nombreEditorial=scanner.next();
                                 for(Editorial editorial: this.editoriales)
@@ -130,7 +130,7 @@ public class Libreria {
                     }
                     break;
             }
-            if(nombreEditorial != null && nombreLibro != null && cantidad != 0)//comprobar que ande
+            if(nombreEditorial != null && nombreLibro != null && cantidad != 0)
             {
                 venta(cantidad, nombreLibro, nombreEditorial);
             }
@@ -260,4 +260,3 @@ public class Libreria {
         }
     }
 }
-/*En comprar libro terminarlo y hacer que no se puedan poner libros que no estan en stock*/
