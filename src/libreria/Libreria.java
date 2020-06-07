@@ -181,26 +181,31 @@ public class Libreria {
     }
     public void ventasDelDia()
     {
-        int total=0;
+        int totalCantidad=0;
+        float totalDinero=0;
         String nombreEditorial="";
         for(Editorial editorial: this.editoriales)
         {
-            int aux=0;
+            int auxCantidad=0;
+            float auxDinero=0;
             for(Factura factura:editorial.getFacturas())
             {
                 if(factura.getFecha().getDay()==new Date().getDay()&&factura.getFecha().getMonth()==new Date().getMonth()&&factura.getFecha().getYear()==new Date().getYear())
                 {
-                    aux=aux+factura.getCantidadLibros();
+                    auxCantidad=auxCantidad+factura.getCantidadLibros();
+                    auxDinero=auxDinero+factura.getTotal();
                 }
             }
-            if(total<aux)
+            if(totalCantidad<auxCantidad)
             {
                 nombreEditorial=editorial.getNombre();
-                total=aux;
+                totalCantidad=auxCantidad;
+                totalDinero=auxDinero;
             }
-            System.out.println(editorial.getNombre()+" VENDIO: "+aux);
+            System.out.println(editorial.getNombre()+" VENDIO: "+totalCantidad);
         }
-        System.out.println("MAS VENTAS: "+nombreEditorial);
+
+        System.out.println("MAS VENTAS: "+nombreEditorial+" TOTAL VENTAS: "+totalCantidad+" TOTAL DINERO: "+totalDinero);
     }
     public static void main(String [] args)
     {
