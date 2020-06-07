@@ -41,8 +41,7 @@ public class Libreria {
     public void comprarLibro()
     {
         int cantidad=0;
-        String nombreLibro="";
-        String nombreEditorial="";
+        String nombreLibro="", nombreEditorial="";
         Scanner scanner= new Scanner(System.in);
         for(int i=0; i!=-1;i++)
         {
@@ -51,73 +50,7 @@ public class Libreria {
             switch(i)
             {
                 case 1:
-                    boolean libroElegido=false, editorialElegida=false;
-                    for(int x=0; x!=-1; x++)
-                    {
-                        System.out.println("NOMBRE LIBRO: ");
-                        nombreLibro=scanner.next();
-                        for(Libro libro: this.libros)
-                        {
-                            if(nombreLibro.equals(libro.getNombre()))
-                            {
-                                libroElegido=true;
-                                System.out.println("NOMBRE EDITORIAL: ");
-                                nombreEditorial=scanner.next();
-                                for(Editorial editorial: this.editoriales)
-                                {
-                                    if(nombreEditorial.equals(editorial.getNombre()) && editorial.getStock().containsKey(nombreLibro))
-                                    {
-                                        editorialElegida=true;
-                                        System.out.println("CANTIDAD(si queres volver(0)):");
-                                        cantidad=scanner.nextInt();
-                                        while(cantidad<1)
-                                        {
-                                            if(cantidad==0)
-                                            {
-                                                x=-2;
-                                                i=-2;
-                                            }
-                                            else
-                                            {
-                                                System.out.println("CANTIDAD:");
-                                                cantidad=scanner.nextInt();
-                                            }
-                                        }
-                                    }
-                                }
-                                if(editorialElegida==false)
-                                {
-                                    System.out.println("Esa editorial no tiene el libro, (0) Listado, (1) para elegir otra editorial y (2) para salir");
-                                    int k=scanner.nextInt();
-                                    if(k==2)
-                                    {
-                                        x=-2;
-                                        i=-2;
-                                    }
-                                    else if(k==0)
-                                    {
-                                        i=1;
-                                        x=-2;
-                                    }
-                                }
-                            }
-                        }
-                        if(libroElegido==false)
-                        {
-                            System.out.println("No tenemos ese libro, (1) para elegir otro y (2) para salir");
-                            int k=scanner.nextInt();
-                            if(k==2)
-                            {
-                                x=-2;
-                                i=-2;
-                            }
-                        }
-                        if(libroElegido==true && editorialElegida==true && cantidad>0)
-                        {
-                            x=-2;
-                            i=-2;
-                        }
-                    }
+                    elegirLibro(cantidad, nombreLibro, nombreEditorial, i);
                     break;
                 case 2:
                     for(int x=0; x<this.editoriales.size(); x++)
@@ -130,10 +63,81 @@ public class Libreria {
                     }
                     break;
             }
-            if(nombreEditorial != null && nombreLibro != null && cantidad != 0)
+        }
+    }
+    public void elegirLibro(int cantidad, String nombreLibro, String nombreEditorial, int i)
+    {
+        Scanner scanner=new Scanner(System.in);
+        boolean libroElegido=false, editorialElegida=false;
+        for(int x=0; x!=-1; x++)
+        {
+            System.out.println("NOMBRE LIBRO: ");
+            nombreLibro=scanner.next();
+            for(Libro libro: this.libros)
             {
-                venta(cantidad, nombreLibro, nombreEditorial);
+                if(nombreLibro.equals(libro.getNombre()))
+                {
+                    libroElegido=true;
+                    System.out.println("NOMBRE EDITORIAL: ");
+                    nombreEditorial=scanner.next();
+                    for(Editorial editorial: this.editoriales)
+                    {
+                        if(nombreEditorial.equals(editorial.getNombre()) && editorial.getStock().containsKey(nombreLibro))
+                        {
+                            editorialElegida=true;
+                            System.out.println("CANTIDAD(si queres volver(0)):");
+                            cantidad=scanner.nextInt();
+                            while(cantidad<1)
+                            {
+                                if(cantidad==0)
+                                {
+                                    x=-2;
+                                    i=-2;
+                                }
+                                else
+                                {
+                                    System.out.println("CANTIDAD:");
+                                    cantidad=scanner.nextInt();
+                                }
+                            }
+                        }
+                    }
+                    if(editorialElegida==false)
+                    {
+                        System.out.println("Esa editorial no tiene el libro, (0) Listado, (1) para elegir otra editorial y (2) para salir");
+                        int k=scanner.nextInt();
+                        if(k==2)
+                        {
+                            x=-2;
+                            i=-2;
+                        }
+                        else if(k==0)
+                        {
+                            i=1;
+                            x=-2;
+                        }
+                    }
+                }
             }
+            if(libroElegido==false)
+            {
+                System.out.println("No tenemos ese libro, (1) para elegir otro y (2) para salir");
+                int k=scanner.nextInt();
+                if(k==2)
+                {
+                    x=-2;
+                    i=-2;
+                }
+            }
+            if(libroElegido==true && editorialElegida==true && cantidad>0)
+            {
+                x=-2;
+                i=-2;
+            }
+        }
+        if(nombreEditorial != null && nombreLibro != null && cantidad != 0)
+        {
+            venta(cantidad, nombreLibro, nombreEditorial);
         }
     }
     public void venta(int cantidad, String nombreLibro, String nombreEditorial)
