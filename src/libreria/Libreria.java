@@ -6,7 +6,16 @@ public class Libreria {
     private String nombre;
     private ArrayList<Editorial> editoriales=new ArrayList<>();
     private ArrayList<Libro> libros= new ArrayList<>();
+    private HashSet<Cliente> clientes=new HashSet<>();
     //GETTERS && SETTERS
+
+    public HashSet<Cliente> getClientes() {
+        return clientes;
+    }
+
+    public void setClientes(HashSet<Cliente> clientes) {
+        this.clientes = clientes;
+    }
 
     public ArrayList<Editorial> getEditoriales() {
         return editoriales;
@@ -38,7 +47,7 @@ public class Libreria {
     }
 
     //METODOS
-    public void comprarLibro()
+    public void comprarLibro(Cliente cliente)
     {
         int cantidad=0;
         String nombreLibro="", nombreEditorial="";
@@ -50,7 +59,7 @@ public class Libreria {
             switch(i)
             {
                 case 1:
-                    elegirLibro(cantidad, nombreLibro, nombreEditorial, i);
+                    elegirLibro(cantidad, nombreLibro, nombreEditorial, i, cliente);
                     break;
                 case 2:
                     for(int x=0; x<this.editoriales.size(); x++)
@@ -65,7 +74,7 @@ public class Libreria {
             }
         }
     }
-    public void elegirLibro(int cantidad, String nombreLibro, String nombreEditorial, int i)
+    public void elegirLibro(int cantidad, String nombreLibro, String nombreEditorial, int i, Cliente cliente)
     {
         Scanner scanner=new Scanner(System.in);
         boolean libroElegido=false, editorialElegida=false;
@@ -137,10 +146,10 @@ public class Libreria {
         }
         if(nombreEditorial != null && nombreLibro != null && cantidad != 0)
         {
-            venta(cantidad, nombreLibro, nombreEditorial);
+            venta(cantidad, nombreLibro, nombreEditorial, cliente);
         }
     }
-    public void venta(int cantidad, String nombreLibro, String nombreEditorial)
+    public void venta(int cantidad, String nombreLibro, String nombreEditorial, Cliente cliente)
     {
         for(int x=0; x<this.editoriales.size(); x++)
         {
@@ -151,7 +160,8 @@ public class Libreria {
                     if (librosvendidos.getKey().equals(nombreLibro))
                     {
                         this.editoriales.get(x).getLibrosVendidos().replace(nombreLibro, cantidad + this.editoriales.get(x).getLibrosVendidos().get(nombreLibro));
-                        this.editoriales.get(x).getFacturas().add(new Factura(this.editoriales.get(x).getStock().get(nombreLibro), new Date(), nombreLibro, cantidad));
+                        this.editoriales.get(x).getFacturas().add(new Factura(this.editoriales.get(x).getStock().get(nombreLibro)*this.editoriales.get(x).getDescuento(), new Date(), nombreLibro, cantidad, cliente.getApellido(), cliente.getDocumento()));
+                        cliente.getCompras().add(new Factura(this.editoriales.get(x).getStock().get(nombreLibro)*this.editoriales.get(x).getDescuento(), new Date(), nombreLibro, cantidad, cliente.getApellido(), cliente.getDocumento()));/*probar*/
                     }
                 }
             }
@@ -207,6 +217,44 @@ public class Libreria {
 
         System.out.println("MAS VENTAS: "+nombreEditorial+" TOTAL VENTAS: "+totalCantidad+" TOTAL DINERO: "+totalDinero);
     }
+    public boolean comprobarEditorial(String nombre)
+    {
+        for(Editorial editorial: this.editoriales)
+        {
+            if(editorial.getNombre().equals(nombre))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    public void agregarCliente()
+    {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Ingrese el numero de documento");
+        int doc=scanner.nextInt();
+        boolean ok=true;
+        int edad=0;
+        String nombre="", apellido="";
+        for(Cliente cliente:this.clientes)
+        {
+            if(doc==cliente.getDocumento())
+            {
+                System.out.println("Ya hay un cliente con ese documento");
+                ok=false;
+                break;
+            }
+        }
+        if(ok)
+        {
+            System.out.println("Ingresa el nombre, apellido y edad. En ese orden");
+            scanner.next();
+            nombre=scanner.nextLine();//probar si funciona
+            apellido=scanner.nextLine();//probar si funciona
+            edad=scanner.nextInt();//probar si funciona
+            this.clientes.add(new Cliente(nombre, apellido, edad, doc));
+        }
+    }
     public static void main(String [] args)
     {
         Libreria libreria=new Libreria("Yenny");
@@ -231,6 +279,11 @@ public class Libreria {
         Editorial editorial6= new Editorial("Sur");
         Editorial editorial7= new Editorial("Alianza");
 
+        Cliente cliente1= new Cliente("Tomás", "Giménez", 17, 44550000);
+        Cliente cliente2= new Cliente("Tiara", "Lopez", 20, 41000000);
+        Cliente cliente3= new Cliente("Tatiana", "Semedo", 19, 43500000);
+        Cliente cliente4= new Cliente("Taiel", "Benitez", 55, 24550000);
+
         libreria.editoriales.add(editorial1);
         libreria.editoriales.add(editorial2);
         libreria.editoriales.add(editorial3);
@@ -238,6 +291,11 @@ public class Libreria {
         libreria.editoriales.add(editorial5);
         libreria.editoriales.add(editorial6);
         libreria.editoriales.add(editorial7);
+
+        libreria.getClientes().add(cliente1);
+        libreria.getClientes().add(cliente2);
+        libreria.getClientes().add(cliente3);
+        libreria.getClientes().add(cliente4);
 
         editorial1.getStock().put(libro1.getNombre(), libro1.getPrecio());
         editorial1.getStock().put(libro2.getNombre(), libro2.getPrecio());
@@ -251,12 +309,20 @@ public class Libreria {
         libreria.rellenarLibrosVendidos();
         for(int i=1;i!=0; i=i)
         {
-            System.out.println("COMPRAR(1), VENTAS DEL DIA (2) Y SALIR(0)");
+            System.out.println("COMPRAR(1), VENTAS DEL DIA (2), CAMBIAR DESCUENTO EDITORIAL(3), AGREGAR CLIENTE(4), FACTURAS CLIENTE(5) Y SALIR(0)");
             i=scanner.nextInt();
             switch(i)
             {
                 case 1:
-                    libreria.comprarLibro();
+                    System.out.println("Ingrese el dni del cliente");
+                    int doc=scanner.nextInt();
+                    for(Cliente cliente: libreria.getClientes())
+                    {
+                        if(doc==cliente.getDocumento())
+                        {
+                            libreria.comprarLibro(cliente);
+                        }
+                    }
                     break;
                 case 2:
                     for(int k=0; k<editorial1.getFacturas().size(); k++)
@@ -264,6 +330,43 @@ public class Libreria {
                         System.out.println(editorial1.getFacturas().get(k).getCantidadLibros()+" "+editorial1.getFacturas().get(k).getNombreLibro());
                     }
                     libreria.ventasDelDia();
+                    break;
+                case 3:
+                    System.out.println("Ingrese el nombre de la editorial");
+                    scanner.nextLine();
+                    String nombreEditorial = scanner.nextLine();
+                    if(libreria.comprobarEditorial(nombreEditorial))
+                    {
+                        System.out.println("Ingrese el descuento");
+                        for(Editorial editorial: libreria.getEditoriales())
+                        {
+                            if(editorial.getNombre().equals(nombreEditorial))
+                            {
+                                float desc=scanner.nextFloat();
+                                editorial.setDescuento(desc);
+                            }
+                        }
+                    }
+                    break;
+                case 4:
+                    libreria.agregarCliente();
+                    break;
+                case 5:
+                    System.out.println("Ingrese el dni del cliente");
+                    doc=scanner.nextInt();
+                    for(Cliente cliente: libreria.getClientes())
+                    {
+                        if(doc==cliente.getDocumento())
+                        {
+                            for(Factura factura:cliente.getCompras())
+                            {
+                                System.out.println("FACTURA: "+factura.getnFactura());
+                                System.out.println("FECHA: "+factura.getFecha());
+                                System.out.println("LIBRO: "+factura.getNombreLibro()+" CANTIDAD: "+factura.getCantidadLibros());
+                                System.out.println("IMPORTE: "+factura.getTotal());
+                            }
+                        }
+                    }
                     break;
             }
         }

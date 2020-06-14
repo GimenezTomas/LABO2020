@@ -62,4 +62,3 @@ public class Mesa {
         this.nOcupaciones=0;
     }
 }
-//crear una clase pedidos lpm

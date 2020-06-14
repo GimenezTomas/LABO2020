@@ -49,8 +49,8 @@ public class Restaurante {
                 i=scanner.nextInt();
                 if(i!=(-1))
                 {
-                    System.out.println("Ingresa una letra seguido de un espacio y el plato que desees seguido de la cantidad");
-                    scanner.next();//tuve que hacer esto para que me tome el pedido de forma correcta
+                    System.out.println("Ingresa el plato que desees seguido de la cantidad");
+                    scanner.nextLine();//tuve que hacer esto para que me tome el pedido de forma correcta
                     plato=scanner.nextLine();
                     plato=comprobarPlato(plato);
                     System.out.println("Ingresa la cantidad");
@@ -74,7 +74,7 @@ public class Restaurante {
                     }
                     else
                     {
-                        platosAux.put(plato, cantidad + platosAux.get(plato));// Al dope
+                        platosAux.put(plato, cantidad + platosAux.get(plato));
 
                     }
                 }
@@ -273,7 +273,7 @@ public class Restaurante {
         {
             Scanner scanner=new Scanner(System.in);
             System.out.println("INGRESA (1) PARA OCUPAR UNA MESA, (2) DESOCUPAR UNA MESA, (3) HACER UN PEDIDO, (4) PLATO MAS PEDIDO, (5) PLATO MENOS PEDIDO");
-            System.out.println("(6) MESA MAS OCUPADA, (7) ENTREGAR PEDIDO, (8) PROXIMO PEDIDO ,(9)VACIAR INFO PEDIDOS-PLATOS, (-1)SALIR");
+            System.out.println("(6) MESA MAS OCUPADA, (7) ENTREGAR PEDIDO, (8) PROXIMO PEDIDO ,(9)VACIAR INFO PLATOS PEDIDOS-OCUPACIONES MESA, (-1)SALIR");
             i=scanner.nextInt();
             switch (i)
             {
@@ -339,6 +339,10 @@ public class Restaurante {
                     for(Plato plato:restaurante.getPlatos())
                     {
                         plato.setVecesPedido(0);
+                    }
+                    for(Mesa mesaaux:restaurante.getMesas())
+                    {
+                        mesaaux.setnOcupaciones(0);
                     }
                     break;
             }

@@ -7,7 +7,16 @@ public class Editorial {
     private HashMap <String, Float> stock=new HashMap<>();
     private HashMap <String, Integer> librosVendidos=new HashMap<>();
     private ArrayList<Factura> facturas=new ArrayList<>();
+    private float descuento=1;
     //GETTERS && SETTERS
+
+    public float getDescuento() {
+        return descuento;
+    }
+
+    public void setDescuento(float descuento) {
+        this.descuento = descuento;
+    }
 
     public ArrayList<Factura> getFacturas() {
         return facturas;
