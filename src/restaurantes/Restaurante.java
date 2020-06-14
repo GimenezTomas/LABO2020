@@ -272,7 +272,8 @@ public class Restaurante {
         for(int i=0; i!=-1; i=i)
         {
             Scanner scanner=new Scanner(System.in);
-            System.out.println("INGRESA (1) PARA OCUPAR UNA MESA, (2) DESOCUPAR UNA MESA, (3) HACER UN PEDIDO, (4) PLATO MAS PEDIDO, (5) PLATO MENOS PEDIDO, (6) MESA MAS OCUPADA, (7) ENTREGAR PEDIDO, (8) PROXIMO PEDIDO ,(-1)SALIR");
+            System.out.println("INGRESA (1) PARA OCUPAR UNA MESA, (2) DESOCUPAR UNA MESA, (3) HACER UN PEDIDO, (4) PLATO MAS PEDIDO, (5) PLATO MENOS PEDIDO");
+            System.out.println("(6) MESA MAS OCUPADA, (7) ENTREGAR PEDIDO, (8) PROXIMO PEDIDO ,(9)VACIAR INFO PEDIDOS-PLATOS, (-1)SALIR");
             i=scanner.nextInt();
             switch (i)
             {
@@ -333,6 +334,12 @@ public class Restaurante {
                     break;
                 case 8:
                     restaurante.proximoPedido();
+                    break;
+                case 9:
+                    for(Plato plato:restaurante.getPlatos())
+                    {
+                        plato.setVecesPedido(0);
+                    }
                     break;
             }
         }
