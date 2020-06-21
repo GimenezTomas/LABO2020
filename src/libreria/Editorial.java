@@ -2,13 +2,16 @@ package libreria;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-public class Editorial {
+
+public enum Editorial {
+    Kapelusz("Kapelusz", new HashMap<>(), new HashMap<>(), new ArrayList<>(), 1), Sudamericana("Sudamericana", new HashMap<>(), new HashMap<>(), new ArrayList<>(), 1), Atlántida("Atlántida", new HashMap<>(), new HashMap<>(), new ArrayList<>(), 1), ElAteneo("ElAteneo", new HashMap<>(), new HashMap<>(), new ArrayList<>(), 1), Interzona("Interzona", new HashMap<>(), new HashMap<>(), new ArrayList<>(), 1), Sur("Sur", new HashMap<>(), new HashMap<>(), new ArrayList<>(), 1), Alianza("Alianza", new HashMap<>(), new HashMap<>(), new ArrayList<>(), 1);
+
     private String nombre;
-    private HashMap <String, Float> stock=new HashMap<>();
+    private HashMap<String, Float> stock=new HashMap<>();
     private HashMap <String, Integer> librosVendidos=new HashMap<>();
     private ArrayList<Factura> facturas=new ArrayList<>();
     private float descuento=1;
-    //GETTERS && SETTERS
+
 
     public float getDescuento() {
         return descuento;
@@ -49,10 +52,14 @@ public class Editorial {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-    //CONSTRUCTOR
-    public Editorial(String nombre) {
+
+    Editorial(String nombre, HashMap<String, Float> stock, HashMap<String, Integer> librosVendidos, ArrayList<Factura> facturas, float descuento) {
         this.nombre = nombre;
+        this.stock = stock;
+        this.librosVendidos = librosVendidos;
+        this.facturas = facturas;
+        this.descuento = descuento;
     }
 
-    //METODOS
 }
+

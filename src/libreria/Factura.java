@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Factura {
     private float total;
-    public static int count=1;
+    public static int count=0;
     private int nFactura;
     private Date fecha;
     private String nombreLibro;
