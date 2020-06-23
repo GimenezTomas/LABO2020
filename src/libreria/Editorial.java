@@ -9,7 +9,7 @@ public enum Editorial {
     private String nombre;
     private HashMap<String, Float> stock=new HashMap<>();
     private HashMap <String, Integer> librosVendidos=new HashMap<>();
-    private ArrayList<Factura> facturas=new ArrayList<>();
+    private ArrayList<Integer> idFacturas=new ArrayList<>();
     private float descuento=1;
 
 
@@ -21,12 +21,12 @@ public enum Editorial {
         this.descuento = descuento;
     }
 
-    public ArrayList<Factura> getFacturas() {
-        return facturas;
+    public ArrayList<Integer> getIdFacturas() {
+        return idFacturas;
     }
 
-    public void setFacturas(ArrayList<Factura> facturas) {
-        this.facturas = facturas;
+    public void setIdFacturas(ArrayList<Integer> idFacturas) {
+        this.idFacturas = idFacturas;
     }
 
     public HashMap<String, Integer> getLibrosVendidos() {
@@ -53,11 +53,11 @@ public enum Editorial {
         this.nombre = nombre;
     }
 
-    Editorial(String nombre, HashMap<String, Float> stock, HashMap<String, Integer> librosVendidos, ArrayList<Factura> facturas, float descuento) {
+    Editorial(String nombre, HashMap<String, Float> stock, HashMap<String, Integer> librosVendidos, ArrayList<Integer> idFacturas, float descuento) {
         this.nombre = nombre;
         this.stock = stock;
         this.librosVendidos = librosVendidos;
-        this.facturas = facturas;
+        this.idFacturas = idFacturas;
         this.descuento = descuento;
     }
 

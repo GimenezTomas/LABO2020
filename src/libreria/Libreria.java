@@ -1,13 +1,16 @@
 package libreria;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Libreria {
     private String nombre;
+    private ArrayList<Factura> facturas = new ArrayList<>();
     private ArrayList<Editorial> editoriales=new ArrayList<>();
     private ArrayList<Libro> libros= new ArrayList<>();
     private HashSet<Cliente> clientes=new HashSet<>();
     private ArrayList<Cuaderno> cuadernos= new ArrayList<>();
+    private HashSet<Dia> dias = new HashSet<>();
     //GETTERS && SETTERS
 
     public ArrayList<Cuaderno> getCuadernos() {
@@ -56,7 +59,7 @@ public class Libreria {
     }
 
     //METODOS
-    public void comprarLibro(Cliente cliente)
+    public void comprar(Cliente cliente)
     {
         int cantidad=0;
         String nombreLibro="", nombreEditorial="";
@@ -69,39 +72,55 @@ public class Libreria {
             if(i==1)
             {
                 int x=0;
-                System.out.println("Los cuadernos que tenemos son: CHICO(1), MEDIANO(2), GRANDE(3)");
+                System.out.println("Los cuadernos que tenemos son: CHICO(1), MEDIANO(2), GRANDE(3). (4)SALIR");
                 i=scanner.nextInt();
+                while(i!=1 && i!=2 && i!=3 && i!=4)
+                {
+                    System.out.println("Los cuadernos que tenemos son: CHICO(1), MEDIANO(2), GRANDE(3). (4)SALIR");
+                    i=scanner.nextInt();
+                }
                 for (int j = 0; j !=3 ; j=j) {
-                    System.out.println("(1) VER ESPECIFICACIONES, (2) CANTIDAD, (3) SALIR");
-                    j=scanner.nextInt();
-                    if(j==1 || x==0)
+                    if(i==4)
                     {
-                        if(i==1)
-                        {
-                            c1 = Cuaderno.CHICO;
-                            System.out.println("CUADERNO CHICO: Hojas: "+c1.getCantHojas()+" Precio: "+c1.getPrecio());
-                        }
-                        else if(i==2)
-                        {
-                            c1 = Cuaderno.MEDIANO;
-                            System.out.println("CUADERNO CHICO: Hojas: "+c1.getCantHojas()+" Precio: "+c1.getPrecio());
-                        }
-                        else
-                        {
-                            c1 = Cuaderno.GRANDE;
-                            System.out.println("CUADERNO CHICO: Hojas: "+c1.getCantHojas()+" Precio: "+c1.getPrecio());
-                        }
+                        j=3;
                     }
-                    if(j==2)
+                    else
                     {
-                        System.out.println("Ingresa por teclado la cantidad, (0) ATRAS");
-                        cantidad=scanner.nextInt();
-                        if(cantidad>0)
+                        System.out.println("(1) VER ESPECIFICACIONES, (2) CANTIDAD, (3) SALIR");
+                        j=scanner.nextInt();
+                        if(j==1 || x==0)
                         {
-                            cliente.getCompras().add(new Factura(c1.getPrecio(), new Date(), c1.getNombre(), cantidad, cliente.getApellido(), cliente.getDocumento()));
-                            j=3;
+                            if(i==1)
+                            {
+                                c1 = Cuaderno.CHICO;
+                                System.out.println("CUADERNO CHICO: Hojas: "+c1.getCantHojas()+" Precio: "+c1.getPrecio());
+                            }
+                            else if(i==2)
+                            {
+                                c1 = Cuaderno.MEDIANO;
+                                System.out.println("CUADERNO MEDIANO: Hojas: "+c1.getCantHojas()+" Precio: "+c1.getPrecio());
+                            }
+                            else if(i==3)
+                            {
+                                c1 = Cuaderno.GRANDE;
+                                System.out.println("CUADERNO GRANDE: Hojas: "+c1.getCantHojas()+" Precio: "+c1.getPrecio());
+                            }
                         }
-                        x++;
+                        if(j==2)
+                        {
+                            System.out.println("Ingresa por teclado la cantidad, (0) ATRAS");
+                            cantidad=scanner.nextInt();
+                            if(cantidad>0)
+                            {
+                                Factura factura = new Factura(c1.getPrecio(), new Date(), c1.getNombre(), cantidad, cliente.getApellido(), cliente.getDocumento());
+                                cliente.getCompras().add(factura);
+                                this.facturas.add(factura);
+                                String stringDate = nombreDia(new Date());
+                                idFacturaADia(this.facturas, stringDate);
+                                j=3;
+                            }
+                            x++;
+                        }
                     }
                 }
             }
@@ -213,11 +232,39 @@ public class Libreria {
                 {
                     if (librosvendidos.getKey().equals(nombreLibro))
                     {
+                        Factura factura= new Factura(this.editoriales.get(x).getStock().get(nombreLibro)*this.editoriales.get(x).getDescuento(), new Date(), nombreLibro, cantidad, cliente.getApellido(), cliente.getDocumento());
                         this.editoriales.get(x).getLibrosVendidos().replace(nombreLibro, cantidad + this.editoriales.get(x).getLibrosVendidos().get(nombreLibro));
-                        this.editoriales.get(x).getFacturas().add(new Factura(this.editoriales.get(x).getStock().get(nombreLibro)*this.editoriales.get(x).getDescuento(), new Date(), nombreLibro, cantidad, cliente.getApellido(), cliente.getDocumento()));
-                        cliente.getCompras().add(new Factura(this.editoriales.get(x).getStock().get(nombreLibro)*this.editoriales.get(x).getDescuento(), new Date(), nombreLibro, cantidad, cliente.getApellido(), cliente.getDocumento()));/*probar*/
+                        this.editoriales.get(x).getIdFacturas().add(factura.getnFactura());
+                        this.facturas.add(factura);
+                        cliente.getCompras().add(factura);/*probar*/
+                        String stringDate = nombreDia(new Date());
+                        idFacturaADia(this.facturas, stringDate);
                     }
                 }
+            }
+        }
+    }
+    public String nombreDia(Date date)
+    {
+        SimpleDateFormat sdf = new SimpleDateFormat("EEEEEEEE");
+        String stringDate = sdf.format(date);
+        return stringDate;
+    }
+    public void idFacturaADia(ArrayList<Factura> facturas, String nombreDia)
+    {
+        int id=0;
+        for(Factura factura: facturas)
+        {
+            if(factura.getnFactura()>id)
+            {
+                id=factura.getnFactura();
+            }
+        }
+        for(Dia dia : this.dias)
+        {
+            if(dia.getNombre().equals(nombreDia))
+            {
+                dia.getIdFacturas().add(id);
             }
         }
     }
@@ -243,7 +290,7 @@ public class Libreria {
                 }
         }
     }
-    public void ventasDelDia()
+    public void maxVentasEditoriales( boolean printEditoriales)
     {
         int totalCantidad=0;
         float totalDinero=0;
@@ -252,23 +299,29 @@ public class Libreria {
         {
             int auxCantidad=0;
             float auxDinero=0;
-            for(Factura factura:editorial.getFacturas())
+            for(Integer id : editorial.getIdFacturas())
             {
-                if(factura.getFecha().getDay()==new Date().getDay()&&factura.getFecha().getMonth()==new Date().getMonth()&&factura.getFecha().getYear()==new Date().getYear())
+                for(Factura factura:this.facturas)
                 {
-                    auxCantidad=auxCantidad+factura.getCantidadLibros();
-                    auxDinero=auxDinero+factura.getTotal();
+                    if(factura.getnFactura()==id)
+                    {
+                        auxCantidad=auxCantidad+factura.getCantidadLibros();
+                        auxDinero=auxDinero+factura.getTotal();
+                    }
                 }
             }
             if(totalCantidad<auxCantidad)
             {
-                nombreEditorial=editorial.getNombre();
                 totalCantidad=auxCantidad;
                 totalDinero=auxDinero;
+                nombreEditorial=editorial.getNombre();
             }
-            System.out.println(editorial.getNombre()+" VENDIO: "+totalCantidad);
-        }
+            if(printEditoriales)
+            {
+                System.out.println(editorial.getNombre()+" VENDIO: "+auxCantidad+" TOTAL DINERO: "+auxDinero);
+            }
 
+        }
         System.out.println("MAS VENTAS: "+nombreEditorial+" TOTAL VENTAS: "+totalCantidad+" TOTAL DINERO: "+totalDinero);
     }
     public boolean comprobarEditorial(String nombre)
@@ -309,9 +362,51 @@ public class Libreria {
             this.clientes.add(new Cliente(nombre, apellido, edad, doc));
         }
     }
+    public void maxVentasPorDia(boolean printAllDays)
+    {
+        int totalCantidad=0;
+        float totalDinero=0;
+        String nombreEditorial="", nombreDia="";
+        for(Dia dia: this.dias)
+        {
+            int auxCantidad=0;
+            float auxDinero=0;
+            for(Integer id : dia.getIdFacturas())
+            {
+                for(Factura factura:this.facturas)
+                {
+                    if(factura.getnFactura()==id)
+                    {
+                        auxCantidad=auxCantidad+factura.getCantidadLibros();
+                        auxDinero=auxDinero+factura.getTotal();
+                    }
+                }
+            }
+            if(totalCantidad<auxCantidad)
+            {
+                totalCantidad=auxCantidad;
+                totalDinero=auxDinero;
+                nombreDia=dia.getNombre();
+            }
+            if(printAllDays)
+            {
+                System.out.println(dia.getNombre()+" VENDIO: "+auxCantidad+" TOTAL DINERO: "+auxDinero);
+            }
+
+        }
+        System.out.println("MAS VENTAS: "+nombreDia+" TOTAL VENTAS: "+totalCantidad+" TOTAL DINERO: "+totalDinero);
+    }
     public static void main(String [] args)
     {
         Libreria libreria=new Libreria("Yenny");
+
+        libreria.dias.add(Dia.DOMINNGO);
+        libreria.dias.add(Dia.LUNES);
+        libreria.dias.add(Dia.MARTES);
+        libreria.dias.add(Dia.MIERCOLES);
+        libreria.dias.add(Dia.JUEVES);
+        libreria.dias.add(Dia.VIERNES);
+        libreria.dias.add(Dia.SABADO);
 
         Libro libro1=new Libro("Hola", 100);
         Libro libro2=new Libro("Polo", 1235);
@@ -381,7 +476,7 @@ public class Libreria {
         libreria.rellenarLibrosVendidos();
         for(int i=1;i!=0; i=i)
         {
-            System.out.println("COMPRAR(1), VENTAS DEL DIA (2), CAMBIAR DESCUENTO EDITORIAL(3), AGREGAR CLIENTE(4), FACTURAS CLIENTE(5) Y SALIR(0)");
+            System.out.println("COMPRAR(1), VENTAS DEL DIA(EDITORIALES) (2), CAMBIAR DESCUENTO EDITORIAL(3), AGREGAR CLIENTE(4), FACTURAS CLIENTE(5), DIA CON MAX VENTAS(6), VENTAS POR DIA(7), EDITORIAL CON MAX VENTAS(8) Y SALIR(0)");
             i=scanner.nextInt();
             switch(i)
             {
@@ -392,16 +487,12 @@ public class Libreria {
                     {
                         if(doc==cliente.getDocumento())
                         {
-                            libreria.comprarLibro(cliente);
+                            libreria.comprar(cliente);
                         }
                     }
                     break;
                 case 2:
-                    for(int k=0; k<editorial1.getFacturas().size(); k++)
-                    {
-                        System.out.println(editorial1.getFacturas().get(k).getCantidadLibros()+" "+editorial1.getFacturas().get(k).getNombreLibro());
-                    }
-                    libreria.ventasDelDia();
+                    libreria.maxVentasEditoriales(true);
                     break;
                 case 3:
                     System.out.println("Ingrese el nombre de la editorial");
@@ -440,6 +531,15 @@ public class Libreria {
                             }
                         }
                     }
+                    break;
+                case 6:
+                    libreria.maxVentasPorDia(false);
+                    break;
+                case 7:
+                    libreria.maxVentasPorDia(true);
+                    break;
+                case 8:
+                    libreria.maxVentasEditoriales(false);
                     break;
             }
         }
