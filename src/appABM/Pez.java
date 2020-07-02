@@ -1,7 +1,7 @@
 package appABM;
 
 import persona.Persona;
-import sistemaABM.Mascota;
+//import sistemaABM.Mascota;
 
 import java.util.HashSet;
 

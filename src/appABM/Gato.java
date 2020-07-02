@@ -1,7 +1,7 @@
 package appABM;
 
 import persona.Persona;
-import sistemaABM.Mascota;
+//import sistemaABM.Mascota;
 
 public class Gato extends Animal {
     private String saludo="miau";
