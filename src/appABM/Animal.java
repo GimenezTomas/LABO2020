@@ -35,18 +35,19 @@ public class Animal {
 
     //CONSTRUCTOR
 
-    public Animal(String nombre, String tipoAnimal, Persona dueño) {
+    public Animal(String nombre, String tipoAnimal, Persona dueño){
         this.nombre = nombre;
         this.tipoAnimal = tipoAnimal;
         this.dueño = dueño;
     }
-
-    public void alimentar()
-    {
+    public Animal(String tipoAnimal){
+        this.tipoAnimal = tipoAnimal;
+       // this.dueño = dueño;
+    }
+    public void alimentar()    {
         System.out.println("Se alimento a "+this.nombre);
     }
-    public void saludar(int dni)
-    {
+    public void saludar(int dni){
 
     }
 }
