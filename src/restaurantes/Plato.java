@@ -3,7 +3,7 @@ package restaurantes;
 public class Plato {
     private String nombre;
     private float precio;
-    private int vecesPedido;
+    private int vecesPedido=0;
     //GETTERS && SETTERS
     public String getNombre() {
         return nombre;
