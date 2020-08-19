@@ -3,7 +3,6 @@ package restaurantes;
 public class Plato {
     private String nombre;
     private float precio;
-    private int vecesPedido=0;
     //GETTERS && SETTERS
     public String getNombre() {
         return nombre;
@@ -21,13 +20,6 @@ public class Plato {
         this.precio = precio;
     }
 
-    public int getVecesPedido() {
-        return vecesPedido;
-    }
-
-    public void setVecesPedido(int vecesPedido) {
-        this.vecesPedido = vecesPedido;
-    }
     //CONSTRUCTOR
     public Plato(String nombre, float precio) {
         this.nombre = nombre;
