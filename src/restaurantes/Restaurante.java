@@ -881,5 +881,3 @@ public class Restaurante {
         });
     }
 }
-/* con el tema de la base de datos, ¿Como hago? Porque tengo la base con ids agregados pero cuando el programa se reinicia, obviamente, estos no se cargan en la base. Si los pongo en null (para que sea autoincrementable) les perderia el rastro*/
-//cambiar boton 9 por agregar plato
