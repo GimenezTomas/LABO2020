@@ -36,4 +36,9 @@ public class Mesa {
     public Mesa() {
         this.nMesa=count++;
     }
+    public Mesa(int nMesa, boolean ocupada){
+        this.nMesa=nMesa;
+        this.ocupada = ocupada;
+        count = nMesa +1 ;
+    }
 }

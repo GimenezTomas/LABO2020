@@ -1,5 +1,9 @@
 package hotel;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -9,15 +13,68 @@ import java.util.Date;
 import java.util.Scanner;
 
 public class Hotel {
-    private ArrayList<Habitaciones> habitacionesArreglo;
-     public ArrayList<Habitaciones> getHabitacionesArreglo() {
-        return habitacionesArreglo;
+    private ArrayList<Habitaciones> habitaciones= new ArrayList<>();
+    private ArrayList<Huesped> huespedes = new ArrayList<>();
+    private ArrayList<Reserva> reservas = new ArrayList<>();
+    private JFrame ventana;
+    private JPanel panelPrincipal;
+    //GETTERS && SETTERS
+
+    public JPanel getPanelPrincipal() {
+        return panelPrincipal;
     }
 
-    public void setHabitacionesArreglo(ArrayList<Habitaciones> habitacionesArreglo) {
-        this.habitacionesArreglo = habitacionesArreglo;
+    public void setPanelPrincipal(JPanel panelPrincipal) {
+        this.panelPrincipal = panelPrincipal;
     }
-     public void top6HuespedesMasFrecuentes(ArrayList<Huesped> listaHuespedes, ArrayList<Reserva> reservas) {
+
+    public ArrayList<Huesped> getHuespedes() {
+        return huespedes;
+    }
+
+    public void setHuespedes(ArrayList<Huesped> huespedes) {
+        this.huespedes = huespedes;
+    }
+
+    public ArrayList<Reserva> getReservas() {
+        return reservas;
+    }
+
+    public void setReservas(ArrayList<Reserva> reservas) {
+        this.reservas = reservas;
+    }
+
+    public JFrame getVentana() {
+        return ventana;
+    }
+
+    public void setVentana(JFrame ventana) {
+        this.ventana = ventana;
+    }
+
+    public ArrayList<Habitaciones> getHabitaciones() {
+        return habitaciones;
+    }
+
+    public void setHabitaciones(ArrayList<Habitaciones> habitacionesArreglo) {
+        this.habitaciones = habitacionesArreglo;
+    }
+    //CONSTRUCTOR
+    public Hotel(int ventanaWidth, int ventanaHeight, String title) {
+        this.ventana = new JFrame(title);
+        this.ventana.setLayout(null);
+        this.ventana.setSize(ventanaWidth, ventanaHeight);
+        this.ventana.setVisible(true);
+        this.ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        this.panelPrincipal = new JPanel();
+        this.panelPrincipal.setSize(this.ventana.getSize());
+        this.panelPrincipal.setName("Panel");
+        this.panelPrincipal.setLayout(/*new BorderLayout()*/null);
+        this.panelPrincipal.setVisible(true);
+        this.ventana.add(panelPrincipal);
+    }
+     /*public void top6HuespedesMasFrecuentes(ArrayList<Huesped> listaHuespedes, ArrayList<Reserva> reservas) {
          ArrayList<Reserva> copiaReserva = (ArrayList<Reserva>) reservas.clone();
          ArrayList<Integer> top6 = new ArrayList<>();
          ArrayList<Integer> ganadora = new ArrayList<Integer>();
@@ -66,7 +123,7 @@ public class Hotel {
          for (int i = 0; i < 6; i++) {
              System.out.println(i+1 + ") Huesped: " + top6.get(i));
          }
-     }
+     }*/
     public boolean descSIoNO ( Reserva reserva01)
     {
         Long datediff = dateDiff(reserva01.getFechaIngreso(),reserva01.getFechaEgreso());
@@ -389,79 +446,184 @@ public class Hotel {
             Long datediff = ChronoUnit.DAYS.between(d1,d2);
         return datediff;
     }
+    /*public void top6Huespedes(){
+        JPanel feedBack = new JPanel();
+        feedBack.setSize(this.ventana.getSize());
+
+        ArrayList<Reserva> copiaReserva = (ArrayList<Reserva>) reservas.clone();
+        ArrayList<Integer> top6 = new ArrayList<>();
+        ArrayList<Integer> ganadora = new ArrayList<Integer>();
+        ArrayList<Huesped> huespedesClon = (ArrayList<Huesped>) listaHuespedes.clone();
+        ganadora.add(0);//guardo la cantidad de veces que se repite el id AUX(contadorAUX)
+        ganadora.add(0);//guardo el id AUX
+        ganadora.add(0);//guardo la cantidad de veces que se repite el id para que el otro se pueda reiniciar(CONTADOR)
+        ganadora.add(0);//guardo el id para que se pueda reiniciar
+        ganadora.add(0);//guardo indice de huespedes clon(aux)
+        ganadora.add(0);//guardo indice de huespedes clon
+        for (int x = 0; x < 7; x++) {
+            if (x > 0) {
+                top6.add(ganadora.get(3));
+                huespedesClon.remove(huespedesClon.get(ganadora.get(5)));
+            }
+            ganadora.set(2, 0);
+            ganadora.set(3, 0);
+            ganadora.set(4,0);
+            ganadora.set(5,0);
+            ganadora.set(1,0);
+            ganadora.set(0,0);
+            for (Huesped z : huespedesClon) {
+
+                if (ganadora.get(2) < ganadora.get(0)) {
+                    ganadora.set(3, ganadora.get(1));
+                    ganadora.set(2, ganadora.get(0));
+                    ganadora.set(5, ganadora.get(4));
+                }
+                else if(ganadora.get(2) == ganadora.get(0) && ganadora.get(0)==1)
+                {
+                    ganadora.set(5, 0);
+                }
+                ganadora.set(0, 0);
+                ganadora.set(1,0);
+
+                for (Reserva j : reservas) {
+                    if (z.getNumeroDeHuesped() == j.getNumeroHuesped()) {
+                        System.out.println("z.getNumeroDeHuesped(): "+z.getNumeroDeHuesped()+" = j.getNumeroHuesped(): "+j.getNumeroHuesped());
+                        ganadora.set(0, ganadora.get(0) + 1);
+                        ganadora.set(1, z.getNumeroDeHuesped());
+                        ganadora.set(4, z.getNumeroDeHuesped()-1);
+                    }
+                }
+            }
+        }
+        for (int i = 0; i < 6; i++) {
+            System.out.println(i+1 + ") Huesped: " + top6.get(i));
+        }
+    }*/
+
+    public void armarMenuPrincipal(){
+        JMenuBar menuBarVentana = new JMenuBar();
+        this.ventana.setJMenuBar(menuBarVentana);
+
+        JMenu menuHuesped = new JMenu("HUESPED");
+        menuHuesped.setName("menuHuesped");
+        //menuHuesped.setMenuLocation(ventana.getWidth()/4-menuHuesped.getWidth()/2, menuHuesped.getY());
+        menuBarVentana.add(menuHuesped);
+
+        JMenu menuHabitaciones = new JMenu("HABITACIONES");
+        menuHabitaciones.setName("menuHabitaciones");
+        menuBarVentana.add(menuHabitaciones);
+
+        JMenu menuReserva = new JMenu("RESERVAS");
+        menuReserva.setName("menuReservas");
+        menuBarVentana.add(menuReserva);
+
+        JMenu menuImportes = new JMenu("IMPORTES");
+        menuImportes.setName("menuImportes");
+        menuBarVentana.add(menuImportes);
+
+        JMenuItem item6HuespedesMasFrecuentes = new JMenuItem("6 Huespedes mas frecuentes");
+        item6HuespedesMasFrecuentes.setName("item6HuespedesMasFrecuentes");
+        menuHuesped.add(item6HuespedesMasFrecuentes);
+
+        JMenuItem itemHuespedConDescuento = new JMenuItem("Huesped con descuento");
+        itemHuespedConDescuento.setName("itemHuespedConDescuento");
+        menuHuesped.add(itemHuespedConDescuento);
+
+        JMenuItem itemHuespedesEstadiaProlongada = new JMenuItem("Huespedes con estadia prolongada");
+        itemHuespedesEstadiaProlongada.setName("itemHuespedesEstadiaProlongada");
+        menuHuesped.add(itemHuespedesEstadiaProlongada);
+
+        JMenuItem itemPlanillaHabitaciones = new JMenuItem("Planilla habitaciones");//mostrar todas las habitaciones y si estan ocupadas mostrar el huesped
+        itemPlanillaHabitaciones.setName("itemPlanillaHabitaciones");
+        menuHabitaciones.add(itemPlanillaHabitaciones);
+
+        JMenuItem item3HabitacionesMasSolicitadas = new JMenuItem("3 Habitaciones mas solicitadas");
+        item3HabitacionesMasSolicitadas.setName("item3HabitacionesMasSolicitadas");
+        menuHabitaciones.add(item3HabitacionesMasSolicitadas);
+
+        JMenuItem itemHabitacionesOcupadas = new JMenuItem("Habitaciones ocupadas");
+        itemHabitacionesOcupadas.setName("itemHabitacionesOcupadas");
+        menuHabitaciones.add(itemHabitacionesOcupadas);
+
+        JMenuItem itemHabitacionesDesocupadas = new JMenuItem("Habitaciones desocupadas");
+        itemHabitacionesDesocupadas.setName("itemHabitacionesDesocupadas");
+        menuHabitaciones.add(itemHabitacionesDesocupadas);
+
+        JMenuItem itemIngresoTotal = new JMenuItem("Ingreso total");
+        itemIngresoTotal.setName("itemIngresoTotal");
+        menuImportes.add(itemIngresoTotal);
+
+        JMenuItem itemImporteAPagar = new JMenuItem("Importe a pagar");
+        itemImporteAPagar.setName("itemImporteAPagar");
+        menuImportes.add(itemImporteAPagar);
+
+        JMenuItem itemPlanillaReservas = new JMenuItem("Planilla reservas");
+        itemPlanillaReservas.setName("itemPlanillaReservas");
+        menuReserva.add(itemPlanillaReservas);
+
+        JMenuItem itemProlongarEstadia = new JMenuItem("Prolongar estadia");
+        itemProlongarEstadia.setName("itemProlongarEstadia");
+        menuReserva.add(itemProlongarEstadia);
+
+        JMenuItem itemEntradaSalida = new JMenuItem("Fecha de entrada y salida");
+        itemEntradaSalida.setName("itemEntradaSalida");
+        menuReserva.add(itemEntradaSalida);
+
+    }
     public static void main(String [] args)
     {
-        Hotel hotel01=new Hotel();
-        Habitaciones habitacion01= new Habitaciones(1, 545);
-        Habitaciones habitacion02= new Habitaciones(1, 545);
-        Habitaciones habitacion03= new Habitaciones(1, 545);
-        Habitaciones habitacion04= new Habitaciones(1, 545);
-        Habitaciones habitacion05= new Habitaciones(1, 545);
-        Habitaciones habitacion06= new Habitaciones(1, 545);
-        Habitaciones habitacion07= new Habitaciones(1, 545);
-        Habitaciones habitacion08= new Habitaciones(1, 545);
-        Habitaciones habitacion09= new Habitaciones(2, 745);
-        Habitaciones habitacion10= new Habitaciones(2, 745);
-        Habitaciones habitacion11= new Habitaciones(2, 745);
-        Habitaciones habitacion12= new Habitaciones(2, 745);
-        Habitaciones habitacion13= new Habitaciones(2, 745);
+        Hotel hotel=new Hotel(1350, 700, "HOTEL");
 
-        Huesped huesped01=new Huesped("Frozono", "Ricardo", 47, 22345599);
-        Huesped huesped02=new Huesped("Frozono", "Terrabusi", 37, 12345599);
-        Huesped huesped03=new Huesped("Lopetegui", "Micaela", 27, 32545899);
-        Huesped huesped04=new Huesped("Tinglado", "Francisco", 40, 29855599);
-        Huesped huesped05=new Huesped("Bertran", "Jorge", 48, 28496599);
-        Huesped huesped06=new Huesped("Burruchaga", "Emiliano", 57, 25647599);
-        Huesped huesped07=new Huesped("Pisculichi", "Emiliano", 47, 45187599);
-        Huesped huesped08= new Huesped("Russo", "German", 45, 245677584);
+        for (int i = 0; i < 13; i++) {
+            if (i<9){
+                hotel.getHabitaciones().add(new Habitaciones(1, 545));
+            }
+            else{
+                hotel.getHabitaciones().add(new Habitaciones(2, 745));
+            }
+        }
 
-        ArrayList<Habitaciones> arregloH=new ArrayList<Habitaciones>();
-        hotel01.setHabitacionesArreglo(arregloH);
-        arregloH.add(habitacion01);
-        arregloH.add(habitacion02);
-        arregloH.add(habitacion03);
-        arregloH.add(habitacion04);
-        arregloH.add(habitacion05);
-        arregloH.add(habitacion06);
-        arregloH.add(habitacion07);
-        arregloH.add(habitacion08);
-        arregloH.add(habitacion09);
-        arregloH.add(habitacion10);
-        arregloH.add(habitacion11);
-        arregloH.add(habitacion12);
-        arregloH.add(habitacion13);
+        hotel.getHuespedes().add(new Huesped("Frozono", "Ricardo", 47, 22345599));
+        hotel.getHuespedes().add(new Huesped("Frozono", "Terrabusi", 37, 12345599));
+        hotel.getHuespedes().add(new Huesped("Lopetegui", "Micaela", 27, 32545899));
+        hotel.getHuespedes().add(new Huesped("Tinglado", "Francisco", 40, 29855599));
+        hotel.getHuespedes().add(new Huesped("Bertran", "Jorge", 48, 28496599));
+        hotel.getHuespedes().add(new Huesped("Burruchaga", "Emiliano", 57, 25647599));
+        hotel.getHuespedes().add(new Huesped("Pisculichi", "Emiliano", 47, 45187599));
+        hotel.getHuespedes().add(new Huesped("Russo", "German", 45, 245677584));
 
-        ArrayList<Huesped> arregloHuespedes=new ArrayList<Huesped>();
-        arregloHuespedes.add(huesped01);
-        arregloHuespedes.add(huesped02);
-        arregloHuespedes.add(huesped03);
-        arregloHuespedes.add(huesped04);
-        arregloHuespedes.add(huesped05);
-        arregloHuespedes.add(huesped06);
-        arregloHuespedes.add(huesped07);
-        arregloHuespedes.add(huesped08);
+        hotel.getReservas().add(new Reserva(hotel.getHuespedes().get(0),hotel.getHabitaciones().get(0),new Date(119,05,3),new Date(119,05,15),hotel.getReservas(),hotel.getHuespedes(),  hotel.getHabitaciones()));
+        hotel.getReservas().add(new Reserva(hotel.getHuespedes().get(0),hotel.getHabitaciones().get(0),new Date(119,05,3), new Date(119,05,15),hotel.getReservas(),hotel.getHuespedes(),  hotel.getHabitaciones()));
+        hotel.getReservas().add(new Reserva(hotel.getHuespedes().get(0),hotel.getHabitaciones().get(0),new Date(119,05,3), new Date(119,05,15),hotel.getReservas(),hotel.getHuespedes(),  hotel.getHabitaciones()));
+        hotel.getReservas().add(new Reserva(hotel.getHuespedes().get(0),hotel.getHabitaciones().get(0),new Date(119,05,3), new Date(119,05,15), hotel.getReservas(),hotel.getHuespedes(),  hotel.getHabitaciones()));
+        hotel.getReservas().add(new Reserva(hotel.getHuespedes().get(0),hotel.getHabitaciones().get(0),new Date(119,05,3), new Date(119,05,15), hotel.getReservas(),hotel.getHuespedes(),  hotel.getHabitaciones()));
+        hotel.getReservas().add(new Reserva(hotel.getHuespedes().get(0),hotel.getHabitaciones().get(0),new Date(119,05,3), new Date(119,05,15), hotel.getReservas(),hotel.getHuespedes(),  hotel.getHabitaciones()));
+        hotel.getReservas().add(new Reserva(hotel.getHuespedes().get(0),hotel.getHabitaciones().get(0),new Date(119,05,3), new Date(119,05,15), hotel.getReservas(),hotel.getHuespedes(),  hotel.getHabitaciones()));
+        hotel.getReservas().add(new Reserva(hotel.getHuespedes().get(0),hotel.getHabitaciones().get(0),new Date(119,05,3), new Date(119,05,15), hotel.getReservas(),hotel.getHuespedes(),  hotel.getHabitaciones()));
+        hotel.getReservas().add(new Reserva(hotel.getHuespedes().get(0),hotel.getHabitaciones().get(0), new Date(120,1,06), new Date(120,7,3),hotel.getReservas(),hotel.getHuespedes(),  hotel.getHabitaciones()));
 
-        ArrayList<Reserva>reservas= new ArrayList<>();
-        Reserva reserva1=new Reserva(huesped01,habitacion01,new Date(119,05,3),new Date(119,05,15) ,reservas,arregloHuespedes,  arregloH);
-        reservas.add(reserva1);
-        Reserva reserva2=new Reserva(huesped02,habitacion02,new Date(119,05,3), new Date(119,05,15),reservas,arregloHuespedes,  arregloH);
-        reservas.add(reserva2);
-        Reserva reserva3=new Reserva(huesped03,habitacion03,new Date(119,05,3), new Date(119,05,15), reservas,arregloHuespedes,  arregloH);
-        reservas.add(reserva3);
-        Reserva reserva4=new Reserva(huesped04,habitacion04,new Date(119,05,3), new Date(119,05,15), reservas,arregloHuespedes,  arregloH);
-        reservas.add(reserva4);
-        Reserva reserva5=new Reserva(huesped05,habitacion05,new Date(119,05,3), new Date(119,05,15), reservas,arregloHuespedes,  arregloH);
-        reservas.add(reserva5);
-        Reserva reserva6=new Reserva(huesped06,habitacion06,new Date(119,05,3), new Date(119,05,15), reservas,arregloHuespedes,  arregloH);
-        reservas.add(reserva6);
-        Reserva reserva7=new Reserva(huesped07,habitacion07,new Date(119,05,3), new Date(119,05,15), reservas,arregloHuespedes,  arregloH);
-        reservas.add(reserva7);
-        Reserva reserva8=new Reserva(huesped08,habitacion08,new Date(119,05,3), new Date(119,05,15), reservas,arregloHuespedes,  arregloH);
-        reservas.add(reserva8);
-        Reserva reserva9=new Reserva(huesped02, habitacion02, new Date(120,1,06), new Date(120,7,3),reservas,arregloHuespedes,  arregloH);
-        reservas.add(reserva9);
+        hotel.armarMenuPrincipal();
 
-        Scanner scanner= new Scanner(System.in);
+        Font timesNewRoman = new Font("Times New Roman", Font.BOLD, 40);
+        Font garamond = new Font("Garamond", Font.BOLD, 15);
+
+        JLabel labelBienvenida = new JLabel("¡BIENVENIDO!");
+        labelBienvenida.setName("labelBienvenida");
+        labelBienvenida.setVisible(true);
+        labelBienvenida.setFont(timesNewRoman);
+        labelBienvenida.setBounds(hotel.getVentana().getWidth()/2-150, hotel.getVentana().getHeight()/2-60, 300, 50);
+        hotel.getPanelPrincipal().add(labelBienvenida);
+
+        JLabel labelSubBienvenida = new JLabel();
+        labelSubBienvenida.setText("Usa el menu bar de la esquina superior izquierda para elegir la funcion que necesites");
+        labelSubBienvenida.setBounds(hotel.getVentana().getWidth()/2-270, hotel.getVentana().getHeight()/2+10, 600, 50);
+        labelSubBienvenida.setFont(garamond);
+        hotel.getPanelPrincipal().add(labelSubBienvenida);
+    }
+}
+
+
+        /*Scanner scanner= new Scanner(System.in);
         int i=0, x=0;
         while(i !=-1)
         {
@@ -474,7 +636,7 @@ public class Hotel {
             System.out.println("5) HUESPEDES CON ESTADIA PROLONGADA");
             System.out.println("6) HABITACIONES OCUPADAS");
             System.out.println("7) HABITACIONES DESOCUPADAS");
-            System.out.println("8) VER HUSPEDES U SUS RESPECTIVAS HABITACIONES");
+            System.out.println("8) VER HUSPEDES O SUS RESPECTIVAS HABITACIONES");
             System.out.println("9) TIEMPO DE CADA RESERVA");
             System.out.println("10) FECHA DE ENTRADA Y SALIDA");
             System.out.println("11) PROLONGAR ESTADIA");
@@ -530,7 +692,5 @@ public class Hotel {
                     i=-1;
                     break;
             }
-        }
-    }
-}
+        }*/
 

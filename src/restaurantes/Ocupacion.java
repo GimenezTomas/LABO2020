@@ -39,4 +39,10 @@ public class Ocupacion {
         this.fecha = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         this.nOcupacion = count++;
     }
+
+    public Ocupacion(int nMesa, String fecha, int nOcupacion){
+        this.nMesa = nMesa;
+        this.nOcupacion = nOcupacion;
+        this.fecha = fecha;
+    }
 }

@@ -3,6 +3,7 @@ package restaurantes;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import javax.swing.*;
@@ -61,7 +62,13 @@ public class Restaurante {
         tablas.add("plato_has_pedido");
         this.acceso = new AccesoBaseDeDatos("restaurante", tablas);
         this.nombre = nombre;
-        acceso.connect("root", "Alumno:TomasGimenez2002");
+        this.acceso = new AccesoBaseDeDatos("restaurante", tablas);
+
+        try{
+            acceso.connect("root", "Alumno:TomasGimenez2002");
+        }catch (Exception ex){
+            System.out.println(ex.getStackTrace());
+        }
     }
 
     public void cleanPanel(JPanel panelIngresar/*, JLabel labelIngresar, JTextField textField*/, Component components[]){
@@ -91,6 +98,8 @@ public class Restaurante {
     }
 
     public void añadirPedido(JFrame ventana, JPanel panelMenu, JPanel panelFeedBack, JPanel panelIngresar, JButton boton10, JButton boton11, JTextField textField, JLabel labelIngresar, JLabel labelFeedBack) {
+
+        System.out.println("entre linea 95");
 
         JButton botonIngresar = new JButton("INGRESAR");
         botonIngresar.setBounds(ventana.getWidth()/2-boton10.getWidth()-10, boton10.getY()+30, boton10.getWidth(), boton10.getHeight());
@@ -143,6 +152,8 @@ public class Restaurante {
                 }
                 else{
 
+                    System.out.println("entre linea 148");
+
                     ArrayList<JSpinner> spinners = new ArrayList<>();
                     JButton botonSalir = new JButton("SALIR");
                     botonSalir.setBounds(ventana.getWidth()/2-boton10.getWidth()-10, boton10.getY()+30, boton10.getWidth(), boton10.getHeight());
@@ -159,6 +170,7 @@ public class Restaurante {
                     labelMesa.setVisible(false);
                     for (Plato platoAux: platosClon) {
                         vueltas++;
+                        System.out.println(vueltas+" vueltas");
                         JLabel labelCantidad = new JLabel(platoAux.getNombre());
                         labelCantidad.setBounds(ventana.getWidth()/2-170, 80*vueltas, 500, 40);
                         labelCantidad.setVisible(true);
@@ -173,6 +185,8 @@ public class Restaurante {
                         spinners.add(spinnerPlato);
 
                     }
+                    //Lo que deberia de hacer aca es agregar un panel dentro de panel ingresar y arriba de los botones el cual contenga los platos y usar .setPreferredSize para poder utilizar scrollbars y que los platos no queden fuera de la pantalla
+                    //panelIngresar.setPreferredSize(new Dimension(panelIngresar.getWidth(), vueltas*60));
                     botonSalir.addMouseListener(new MouseAdapter() {
                         @Override
                         public void mouseClicked(MouseEvent e) {
@@ -186,6 +200,8 @@ public class Restaurante {
                     botonAgregar.addMouseListener(new MouseAdapter() {
                         @Override
                         public void mouseClicked(MouseEvent e) {
+
+                            System.out.println("entre linea 194");
 
                             ventana.remove(panelIngresar);
                             panelIngresar.setVisible(false);
@@ -208,8 +224,11 @@ public class Restaurante {
                                 }
                             }
                             if (existePedido){
+                                System.out.println(ocupacionesCopia.size()+" == "+mesa);
                                 for (int i = 0; i <=ocupacionesCopia.size()-1 ; i++) {
+                                    System.out.println(ocupacionesCopia.get(i).getnMesa()+" == "+mesa);
                                     if (ocupacionesCopia.get(i).getnMesa() == mesa) {
+                                        System.out.println("entre linea 219");
                                         Pedido pedido1 = new Pedido(pedido, ocupacionesCopia.get(i).getnOcupacion());
                                         pedidoCopia.add(pedido1);
                                         HashMap<String, Object> newPedido = new HashMap<>();
@@ -418,13 +437,22 @@ public class Restaurante {
     }
 
     public void agregarPlato(String nombre, Float precio){
-        this.platos.add(new Plato(nombre, precio));
-        HashMap<String, Object> platoNuevo = new HashMap<>();
-        platoNuevo.put("nombre", nombre);
-        platoNuevo.put("precio", precio);
-        platoNuevo.put("Restaurante_nombre", this.nombre);
-        acceso.ingresarPlato(platoNuevo);
-        System.out.println(AccesoBaseDeDatos.mensaje);
+        boolean ok = true;
+        for (Plato plato: this.platos) {
+            if (plato.getNombre().equals(nombre)){
+                ok = false;
+            }
+        }
+        if (ok) {
+            this.platos.add(new Plato(nombre, precio));
+            HashMap<String, Object> platoNuevo = new HashMap<>();
+            platoNuevo.put("nombre", nombre);
+            platoNuevo.put("precio", precio);
+            platoNuevo.put("Restaurante_nombre", this.nombre);
+            acceso.ingresarPlato(platoNuevo);
+            System.out.println(AccesoBaseDeDatos.mensaje);
+            System.out.println("atroden");
+        }
     }
     public void ocuparMesa(JFrame ventana, JPanel panelFeedBack, JPanel panelIngresar, JButton boton10, JButton boton11, JTextField textField, JLabel labelIngresar, JLabel labelFeedBack, boolean ocupar) {
         cleanPanel(panelIngresar, new Component[]{labelIngresar, textField});
@@ -490,6 +518,7 @@ public class Restaurante {
                     newOcupacion.put("idOcupacion", ocupacionesClon.get(ocupacionesClon.size()-1).getnOcupacion());
                     newOcupacion.put("idMesa", mesa);
                     newOcupacion.put("fecha", ocupacionesClon.get(ocupacionesClon.size()-1).getFecha());
+                    System.out.println("entre linea 511");
                     acceso.ingresarOcupacion(newOcupacion);
                     acceso.updateMesa(mesa, true);
                 }
@@ -593,20 +622,33 @@ public class Restaurante {
         HashMap<String, Object> mesaNueva = new HashMap<>();
         mesaNueva.put("idMesa", mesa.getnMesa());
         acceso.ingresarMesa(mesaNueva);
-        acceso.ingresarMesa(mesaNueva);
+        //acceso.ingresarMesa(mesaNueva);
+    }
+
+    public void cargarDatos(){
+        acceso.recuperarDatosMesa("mesa", this.mesas);
+        acceso.recuperarDatosOcupacion("ocupaciones", this.ocupaciones);
+        acceso.recuperarDatosPedidos("pedido", this.pedidos);
+        acceso.recuperarDatosPlato("plato", this.platos);
     }
     public static void main(String[] args) {
         Restaurante restaurante = new Restaurante("La cantina");
+
+        restaurante.cargarDatos();
 
         restaurante.agregarPlato("Milanesa con puré de papas", 0.0f);
         restaurante.agregarPlato("Ravioles rellenos con carne", 0f);
         restaurante.agregarPlato("Pizza a la Piedra", 0f);
         restaurante.agregarPlato("Polenta con salsa Fileto", 0f);
         restaurante.agregarPlato("Arroz primavera", 0f);
+       /* restaurante.agregarPlato("Arroz", 0f);
+        restaurante.agregarPlato("Arroz con porotos", 0f);
+        restaurante.agregarPlato("Lomo a la pimienta", 0f);
+        restaurante.agregarPlato("Morcilla", 0f);*/
 
-        for (int i = 0; i < 6; i++) {
+        /*for (int i = 0; i < 6; i++) {
             restaurante.agregarMesa(new Mesa());
-        }
+        }*/
 
         /*VENTANA*/
         JFrame ventana = new JFrame("RESTAURANTE");

@@ -60,4 +60,12 @@ public class Pedido {
         this.fecha = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         this.nOcupacion=nOcupacion;
     }
+    public Pedido(HashMap<String, Integer> platos, int nOcupacion, int nPedido, String fecha, boolean entregado){
+        this.platos = platos;
+        this.nPedido = nPedido;
+        this.fecha = fecha;
+        this.nOcupacion=nOcupacion;
+        this.entregado = entregado;
+        count = nPedido + 1;
+    }
 }
